@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-// App initialization
 const app = express();
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -26,8 +26,8 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => {
   console.log('✅ MongoDB connected');
-  app.listen(5001, () => {
-    console.log('Server running at http://localhost:5001');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 })
 .catch((err) => {
