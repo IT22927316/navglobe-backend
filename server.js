@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// App initialization
 const app = express();
 
 // Middleware
@@ -13,22 +14,20 @@ app.use(express.json());
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
-// Test Route
+// Base route for health check
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('✅ API is running');
 });
 
-// Connect to MongoDB and start server
+// MongoDB + Server Start
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => {
   console.log('✅ MongoDB connected');
-
-  // Use Railway's dynamic port OR fallback to 5001
   const PORT = process.env.PORT || 5001;
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
   });
 })
